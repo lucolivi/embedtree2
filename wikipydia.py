@@ -1,0 +1,2 @@
+class WikiArticle:
+    pass
