@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-def __extract_html_links(html):
+def _extract_html_links(html):
     soup = BeautifulSoup(html, 'html.parser')
 
     links = list()
@@ -18,8 +18,11 @@ def __extract_html_links(html):
 
     return links
 
+def _get_html_text(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    return soup.get_text()
 
-def __filter_wiki_links(links):
+def _filter_wiki_links(links):
 
     blocked_link_terms = set([
         "(disambiguation)", #Not interested in disambiguation pages
@@ -57,7 +60,7 @@ def __filter_wiki_links(links):
 
     return filtered_links
 
-def __remove_page_boxes(html):
+def _remove_page_boxes(html):
     """Function to treat the data, remove unecessary things etc."""
 
     soup = BeautifulSoup(html, 'html.parser')
@@ -84,7 +87,7 @@ def __remove_page_boxes(html):
 
     return str(soup)
 
-def __split_html_h2_sections(html):
+def _split_html_h2_sections(html):
     """Function to split html document in sections (use h2 tags as divisors)"""
 
     soup = BeautifulSoup(html, 'html.parser')
@@ -110,7 +113,7 @@ def __split_html_h2_sections(html):
 
 
 
-def __split_into_sections(htmlObj):
+def _split_into_sections(htmlObj):
     """Function to split html document in sections (use h2 tags as divisors)"""
 
     #Init var to store sections

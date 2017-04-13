@@ -1,7 +1,12 @@
 import requests
-from exceptions import PageRequestTimeout, PageDoesNotExists
+from . import exceptions
 
-def __download_page_data(page, lang, timeout):
+PageRequestTimeout = exceptions.PageRequestTimeout
+PageDoesNotExists = exceptions.PageDoesNotExists
+
+#from exceptions import PageRequestTimeout, PageDoesNotExists
+
+def _download_page_data(page, lang, timeout):
     """Function to retrieve a wikipedia page in html form, with its sections"""
 
     # https://en.wikipedia.org/w/api.php?action=parse&redirects&page=fluid_mechanics
