@@ -1,13 +1,15 @@
 import requests
 from . import exceptions
 
-PageRequestTimeout = exceptions.PageRequestTimeout
-PageDoesNotExists = exceptions.PageDoesNotExists
+#PageRequestTimeout = exceptions.PageRequestTimeout
+#PageDoesNotExists = exceptions.PageDoesNotExists
 
 #from exceptions import PageRequestTimeout, PageDoesNotExists
 
 def _download_page_data(page, lang, timeout):
     """Function to retrieve a wikipedia page in html form, with its sections"""
+    #import exceptions
+
 
     # https://en.wikipedia.org/w/api.php?action=parse&redirects&page=fluid_mechanics
 
@@ -24,11 +26,11 @@ def _download_page_data(page, lang, timeout):
     try:
         page_data = requests.get(wikipedia_api_url, timeout=timeout).json()
     except requests.exceptions.ConnectTimeout:
-        raise PageRequestTimeout(page, lang, timeout)
+        raise exceptions.PageRequestTimeout(page, lang, timeout)
 
     #If the object parse is not in the json object, page does not exists
     if not 'parse' in page_data:
-        raise PageDoesNotExists(page, lang)
+        raise exceptions.PageDoesNotExists(page, lang)
 
     page_title = page_data['parse']['title']
     page_id = page_data['parse']['pageid']

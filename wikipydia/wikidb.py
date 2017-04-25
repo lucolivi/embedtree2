@@ -38,14 +38,14 @@ class WikiDb(object):
     def _register_page_data(self, href, wikiart):
 
         #Register page id lookup tables
-        self.href_to_pageid[href] = wikiart.page_id
+        self.href_to_pageid[href] = wikiart.page_id()
 
         #Register article
-        self.pageid_to_article[wikiart.page_id] = wikiart
+        self.pageid_to_article[wikiart.page_id()] = wikiart
 
-        if not wikiart.page_id in self.pageid_to_href:
-            self.pageid_to_href[wikiart.page_id] = set()
-        self.pageid_to_href[wikiart.page_id].add(href)
+        if not wikiart.page_id() in self.pageid_to_href:
+            self.pageid_to_href[wikiart.page_id()] = set()
+        self.pageid_to_href[wikiart.page_id()].add(href)
 
         # #Register page links and wikisyn
         # page_links = get_page_links(page_data)

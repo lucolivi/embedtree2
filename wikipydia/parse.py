@@ -109,23 +109,51 @@ def _split_html_h2_sections(html):
 
         curr_section += str(tag)
 
+    sections.append(curr_section) #Append final section
+
     return sections
 
 
 
-def _split_into_sections(htmlObj):
-    """Function to split html document in sections (use h2 tags as divisors)"""
 
-    #Init var to store sections
-    sectionObjs = [[]]
 
-    for tag in htmlObj.children:
-        #Start new section in case the tag is h2
-        if tag.name == 'h2':
-            sectionObjs.append([])
+def _remove_informationless_sections(html):
+    """Function to remove some sections that does not contain much relevant information for the article. """
 
-        #If it is a valid tag (invalid tags has no 'name' property)
-        if tag.name != None:
-            sectionObjs[len(sectionObjs) - 1].append(tag)
+    parsed_html = ""
 
-    return sectionObjs
+    tags_to_remove = [
+        '<span class="mw-headline" id="See_also">See also</span>',
+        '<span class="mw-headline" id="References">References</span>',
+        '<span class="mw-headline" id="Further_reading">Further reading</span>',
+        '<span class="mw-headline" id="External_links">External links</span>',
+        '<span class="mw-headline" id="Bibliography">Bibliography</span>',
+        '<span class="mw-headline" id="Notes">Notes</span>'
+    ]
+
+    sections = _split_html_h2_sections(html)
+    
+    for section in sections:
+
+        remove_section = False
+        for tag in tags_to_remove:
+            if tag in section:
+                remove_section = True
+                break
+
+        if remove_section:
+            continue
+
+        parsed_html += section
+
+    return parsed_html
+
+
+if __name__ == "__main__":
+    import download
+    href, title, pid, html = download._download_page_data("JavaScript", "en", 60)
+    html = _remove_page_boxes(html)
+
+    html = _remove_informationless_sections(html)
+    print([html])
+    #_remove_references_and_external_links_sections(html)
