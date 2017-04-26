@@ -2,7 +2,11 @@ import pickle
 
 from collections import Counter, defaultdict
 
+"""
+WIKISYN WILL HELP IN THE FUTURE TO ASSIGN DOCUMENTS, CLASSES TO WIKIPEDIA ARTICLES
 
+
+"""
 
 
 
