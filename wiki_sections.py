@@ -18,23 +18,43 @@ import re
 class ArticleSection:
     def __init__(self, title, content=""):
         self.title = title
+        self.content = content
         
-        self._subsections = [content]
+        self._subsections = list()
     
     def add_subsection(self, subsection):
         assert isinstance(subsection, ArticleSection)
         self._subsections.append(subsection)
-    
+
+    def flatten_sections(self):
+        """Function to tranverse article hierarchy and place every section into an array."""
+        
+        flat_sections = list()
+        flat_sections.append(self)
+
+        for sec in self._subsections:
+            for flat_sec in sec.flatten_sections():
+                flat_sections.append(flat_sec)
+
+        return flat_sections
+
+
+    def __iter__(self):
+        return self._subsections.__iter__()
+
     def __getitem__(self, index):
-        return self._subsections[index]
+        assert index > 0
+        return self._subsections[index-1]
     
     def __str__(self):
-        content = self.title
-        content += "\n"
+        content_list = list()
+        content_list.append(self.title)
+        content_list.append(self.content)
+
         for subsec in self._subsections:
-            content += str(subsec)
-            content += "\n"
-        return content
+            content_list.append(str(subsec))
+
+        return "\n".join(content_list)
     
 #section = ArticleSection("MQTT", "ae")
 #subsec1 = ArticleSection("Test1", "sduiuha")
