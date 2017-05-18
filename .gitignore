@@ -144,3 +144,5 @@ $RECYCLE.BIN/
 *.pdf
 
 udemy_data/
+*.rar
+*.csv
