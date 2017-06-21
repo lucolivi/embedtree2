@@ -10,7 +10,12 @@ class LearnContent(list):
         self.parent = None
 
     def _str_version(self):
-        return "{} ({})".format(self.title, self.__len__())
+        return self.title
+        #return "{} ({})".format(self.title, self.__len__())
+
+    def content_as_text(self):
+        return " ".join([cont.title for cont in self])
+
 
     def __str__(self):
         return self._str_version()
@@ -89,14 +94,14 @@ class LearnContents(list):
 
         results = list()
         this_list = self
-        for content in this_list:
+        for i, content in enumerate(this_list):
             if not match_case:
                 content_title = content.title.lower()
             else:
                 content_title = content.title
 
             if term in content_title:
-                results.append((content, self._title_counter[content.title]))
+                results.append((content, self._title_counter[content.title], i))
 
         sorted_results = sorted(results, key=lambda a: a[1], reverse=True)
 
